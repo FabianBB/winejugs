@@ -4,18 +4,18 @@
 # always empty out the first jug or fill the second one (or both). Formulate this problem as a
 # reachability problem in an appropriately defined graph.
 
-capacities = (8, 5, 3)
-volumes = [8, 0, 0]
-target = [4, 4, 0]
+# now the general case with n jugs
 
-def isValidState() -> bool:
+import sys
+
+
+def isValidState(vols, caps) -> bool:
     """Basic check to see if any obvious constraints are violated, i.e. capacity and non-negativity"""
-    for i in range(volumes):
-        if volumes[i] > capacities[i] or volumes[i] < 0:
+    for i in range(len(vols)):
+        if vols[i] > caps[i] or vols[i] < 0:
             return False
 
     return True
-
 
 def pour(state, fromJug, toJug) -> None:
     """Pour wine from one jug to another, either fill the toJug or fully empty the fromJug. Inplace, so return none"""
@@ -25,7 +25,6 @@ def pour(state, fromJug, toJug) -> None:
     # Pour the wine
     state[fromJug] -= pourable
     state[toJug] += pourable
-
 
 def dfs(curr, lim, target) -> bool:
     """DFS to find the target state in lim steps"""
@@ -58,5 +57,26 @@ def isReachable(target, lim) -> bool:
 
 
 if __name__ == "__main__":
-    print(isReachable(target, 10))
+    inp = input("Enter Capacities: ")
+    capacities = tuple(int(x) for x in inp.split(","))
+
+    inp = input("Enter Starting volumes: ")
+    inp = list(int(x) for x in inp.split(","))
+
+    volumes = [0] * (len(capacities) - len(inp))
+    volumes = inp + volumes
+
+    inp = input("Enter Target: ")
+    inp = list(int(x) for x in inp.split(","))
+    target = [0] * (len(capacities) - len(inp))
+    target = inp + target
+
+    print(f"Capacities: {capacities}")
+    print(f"Volumes: {volumes}")
+    print(f"Target: {target}")
+
+    print(isReachable(target, 100))
+
+
+
 
