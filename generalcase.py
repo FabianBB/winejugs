@@ -6,16 +6,6 @@
 
 # now the general case with n jugs
 
-import sys
-
-
-def isValidState(vols, caps) -> bool:
-    """Basic check to see if any obvious constraints are violated, i.e. capacity and non-negativity"""
-    for i in range(len(vols)):
-        if vols[i] > caps[i] or vols[i] < 0:
-            return False
-
-    return True
 
 def pour(state, fromJug, toJug) -> None:
     """Pour wine from one jug to another, either fill the toJug or fully empty the fromJug. Inplace, so return none"""
