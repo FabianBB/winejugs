@@ -33,6 +33,9 @@ def dfs(curr, lim, target) -> bool:
     # Check base case for lim=0
     if lim == 0:
         return curr == target
+    # base case
+    if curr == target:
+        return True
 
     # Iterate over all possible pours
     for fromJug in range(len(curr)):
