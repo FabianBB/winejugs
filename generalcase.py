@@ -10,11 +10,13 @@
 def pour(state, fromJug, toJug) -> None:
     """Pour wine from one jug to another, either fill the toJug or fully empty the fromJug. Inplace, so return none"""
 
+    # determine how much wine can be poured
     pourable = min(state[fromJug], capacities[toJug] - state[toJug])
 
     # Pour the wine
     state[fromJug] -= pourable
     state[toJug] += pourable
+
 
 def dfs(curr, lim, target) -> bool:
     """DFS to find the target state in lim steps"""
@@ -41,6 +43,7 @@ def dfs(curr, lim, target) -> bool:
 
     return False
 
+
 def isReachable(target, lim) -> bool:
     """Check if the target state is reachable in lim steps"""
     if lim < 0:
@@ -49,6 +52,7 @@ def isReachable(target, lim) -> bool:
     return dfs(volumes, lim, target)
 
 
+# main method (imagine public static void main(String[] args) in Java)
 if __name__ == "__main__":
     inp = input("Enter Capacities: ")
     capacities = tuple(int(x) for x in inp.split(","))
@@ -56,11 +60,14 @@ if __name__ == "__main__":
     inp = input("Enter Starting volumes: ")
     inp = list(int(x) for x in inp.split(","))
 
+    # lazy way to pad input with 0s
     volumes = [0] * (len(capacities) - len(inp))
     volumes = inp + volumes
 
     inp = input("Enter Target: ")
     inp = list(int(x) for x in inp.split(","))
+
+    # same thing
     target = [0] * (len(capacities) - len(inp))
     target = inp + target
 
@@ -68,8 +75,4 @@ if __name__ == "__main__":
     print(f"Volumes: {volumes}")
     print(f"Target: {target}")
 
-    print(isReachable(target, 100))
-
-
-
-
+    print("Target state is reachable:", isReachable(target, 10))
