@@ -6,6 +6,15 @@
 
 # now the general case with n jugs
 
+import sys
+
+def isValidState() -> bool:
+    """Basic check to see if any obvious constraints are violated, i.e. capacity and non-negativity"""
+    for i in range(len(volumes)):
+        if volumes[i] > capacities[i] or volumes[i] < 0:
+            return False
+
+    return True
 
 def pour(state, fromJug, toJug) -> None:
     """Pour wine from one jug to another, either fill the toJug or fully empty the fromJug. Inplace, so return none"""
@@ -81,4 +90,9 @@ if __name__ == "__main__":
     print(f"Volumes: {volumes}")
     print(f"Target: {target}")
 
-    print("Target state is reachable:", isReachable(target, 10, capacities))
+    # if the input state is not valid then exit
+    if not isValidState():
+        print("Invalid State")
+        sys.exit(1)
+
+    print("Target state is reachable:", isReachable(target, 100, capacities))
