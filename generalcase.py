@@ -18,7 +18,7 @@ def pour(state, fromJug, toJug) -> None:
     state[toJug] += pourable
 
 
-def dfs(curr, lim, target) -> bool:
+def dfs(curr, lim, target, capacities) -> bool:
     """DFS to find the target state in lim steps"""
 
     # Check base case for lim=0
@@ -32,24 +32,30 @@ def dfs(curr, lim, target) -> bool:
     for fromJug in range(len(curr)):
         for toJug in range(len(curr)):
 
+            # if the target jug is full or the fromJug is empty, skip the iteration since nothing happens
+            # saves some time
+            if capacities[toJug] == curr[toJug] or curr[fromJug] == 0:
+                continue
+
+            # cant pour into the same jug
             if fromJug != toJug:
 
                 new_state = curr.copy()
                 pour(new_state, fromJug, toJug)
 
                 # recurse from new state onward
-                if dfs(new_state, lim - 1, target):
+                if dfs(new_state, lim - 1, target, capacities):
                     return True
 
     return False
 
 
-def isReachable(target, lim) -> bool:
+def isReachable(target, lim, capacities) -> bool:
     """Check if the target state is reachable in lim steps"""
     if lim < 0:
         return False
 
-    return dfs(volumes, lim, target)
+    return dfs(volumes, lim, target, capacities)
 
 
 # main method (imagine public static void main(String[] args) in Java)
@@ -75,4 +81,4 @@ if __name__ == "__main__":
     print(f"Volumes: {volumes}")
     print(f"Target: {target}")
 
-    print("Target state is reachable:", isReachable(target, 10))
+    print("Target state is reachable:", isReachable(target, 10, capacities))
