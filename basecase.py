@@ -8,14 +8,6 @@ capacities = (8, 5, 3)
 volumes = [8, 0, 0]
 target = [4, 4, 0]
 
-def isValidState() -> bool:
-    """Basic check to see if any obvious constraints are violated, i.e. capacity and non-negativity"""
-    for i in range(volumes):
-        if volumes[i] > capacities[i] or volumes[i] < 0:
-            return False
-
-    return True
-
 
 def pour(state, fromJug, toJug) -> None:
     """Pour wine from one jug to another, either fill the toJug or fully empty the fromJug. Inplace, so return none"""
